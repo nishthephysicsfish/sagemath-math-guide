@@ -1,5 +1,5 @@
 # sagemath-math-guide
-Comprehensive guide for using SageMath as a platform for computation, modeling, and analysis in Mathematics. Intended as a helpful supplement for undergraduate and research-level maths students
+Comprehensive guide for using SageMath as a platform for computation, modeling, and analysis in Mathematics. Intended as a helpful supplement for undergraduate and research-level maths students.
 
 
 
