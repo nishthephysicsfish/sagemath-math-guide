@@ -1,0 +1,1180 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{float}
+\graphicspath{{pictures/}}
+
+
+\newcommand{\codesymbol}[2]{%
+  \begin{codesymbolbox}
+    \texttt{#1} \hfill \(#2\)
+  \end{codesymbolbox}
+}
+
+\geometry{margin=1in}
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+
+\title{\LaTeX{}: A Guide for the Curious Mathematician}
+\author{Nishtha Tikalal}
+\date{} % This removes the date
+
+
+\begin{document}
+\frontmatter
+\maketitle
+\cleardoublepage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+    \textcopyright\ \the\year\ Nishtha Tikalal
+
+    \vspace{1em}
+
+    This work is licensed under the\\
+    \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.}
+
+    \vspace{1em}
+
+    To view a copy of this license, visit\\
+    \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+\end{center}
+
+\vspace*{\fill}
+\cleardoublepage
+\tableofcontents
+
+
+\mainmatter
+
+\chapter*{Preface and Introduction: Why SageMath?}
+\addcontentsline{toc}{chapter}{Preface and Introduction: Why SageMath?}
+
+Mathematics is a vast and evolving field, and having the right tools to explore, compute, and visualize mathematical concepts can make a profound difference in learning and research. SageMath is a free, open-source mathematics software system designed to provide a comprehensive platform for all levels of mathematical computation.
+
+\section*{What is SageMath?}
+
+SageMath (also called Sage) is a powerful software system that brings together many well-established open-source mathematics packages under a common interface. It provides capabilities spanning:
+
+\begin{itemize}
+  \item Arithmetic: integers, rationals, real and complex numbers.
+  \item Algebra: polynomial rings, factorization, group theory.
+  \item Calculus: differentiation, integration, limits, series.
+  \item Linear Algebra: matrices, vectors, eigenvalues, solution of systems.
+  \item Number Theory, Combinatorics, Graph Theory, and more.
+  \item Statistical and numerical computation.
+  \item Visualization: 2D and 3D plotting.
+  \item Programming: based on Python, with support for custom functions and algorithms.
+\end{itemize}
+
+SageMath aims to consolidate and unify these functions into a single system that is accessible, extensible, and suitable for both education and advanced research.
+
+\section*{Main Features}
+
+\begin{itemize}
+  \item \textbf{Free and Open Source:} SageMath is available free of charge under the GPL license, fostering collaboration and continuous improvement.
+  \item \textbf{Integrated Environment:} Combines dozens of mature mathematical libraries, including GAP, NumPy, SciPy, Maxima, matplotlib, and more.
+  \item \textbf{Python-Based:} Uses the Python programming language, making it familiar and extensible for users with programming experience.
+  \item \textbf{Versatile Interfaces:} Use SageMath via command-line, Jupyter notebooks, or the web-based CoCalc platform, among others.
+  \item \textbf{Mathematical Typesetting:} Supports output in \LaTeX{} format for professional-quality documents and presentations.
+  \item \textbf{Visualization:} Create detailed 2D and 3D plots for functions, data, and geometric objects.
+  \item \textbf{Extensible and Programmable:} Users can write custom algorithms and interfaces.
+\end{itemize}
+
+\section*{Comparison with Other Systems}
+
+SageMath was conceived as a free alternative to proprietary software such as Magma, Maple, Mathematica, and MATLAB. Unlike these commercial products, SageMath's open development model helps avoid vendor lock-in and promotes transparency.
+
+Its strength lies in integrating existing open-source libraries under a cohesive, Pythonic interface rather than reinventing tools from scratch. For many users, SageMath offers comparable power and flexibility without licensing costs.
+
+\section*{Who Should Use SageMath?}
+
+SageMath suits a wide spectrum of users:
+
+\begin{itemize}
+  \item \textbf{Students} seeking a comprehensive tool for homework, projects, and exploration.
+  \item \textbf{Educators} who want an accessible classroom tool with powerful capabilities.
+  \item \textbf{Researchers} needing advanced algebraic, numerical, and visualization tools.
+  \item \textbf{Developers} interested in extending mathematical software using Python.
+\end{itemize}
+
+\section*{About This Book}
+
+This book guides you through the essential features of SageMath, starting from installation to mastering mathematical computations, visualization, and integration with \LaTeX. Whether you are a curious learner or a seasoned researcher, the goal is to empower you to use SageMath effectively for your mathematical needs.
+
+\bigskip
+
+Welcome to the world of SageMath!
+
+
+\chapter{Getting Started with SageMath}
+
+This chapter guides you through installing SageMath on your computer, introduces the basic ways to interact with SageMath, and briefly explores the popular cloud-based SageMath platform, CoCalc.
+
+\section{Installation}
+
+SageMath supports major operating systems including Linux, macOS, and Windows (via Windows Subsystem for Linux—WSL). There are multiple ways to install SageMath:
+
+\begin{itemize}
+  \item \textbf{Using Package Managers:} On Linux distributions like Debian, Ubuntu, and Arch Linux, SageMath is often available via the system package manager, making installation quick and easy.
+  \item \textbf{Pre-built Binary Downloads:} For macOS and Windows, pre-built installers or binary tarballs can be downloaded and installed without compiling from source.
+  \item \textbf{Conda-Forge:} SageMath can be installed into a Conda environment using the conda-forge channel, which helps manage dependencies automatically.
+  \item \textbf{Building from Source:} Advanced users can download SageMath source code and compile it, which may take several hours but allows customization.
+  \item \textbf{Cloud-based Options:} If installation is undesirable or impractical, SageMath is available through online platforms such as CoCalc (https://cocalc.com), providing instant access without local setup.
+\end{itemize}
+
+You will need at least 4 GB of free disk space, and it is recommended to have a working \LaTeX{} installation to fully utilize SageMath’s typesetting capabilities.
+
+\section{Starting SageMath: The Sage Console}
+
+Once installed, open a terminal or command prompt and type:
+
+\begin{verbatim}
+sage
+\end{verbatim}
+
+This launches the SageMath interactive console with a prompt like:
+
+\begin{verbatim}
+sage: 
+\end{verbatim}
+
+You can enter Sage commands here directly. For example:
+
+\begin{verbatim}
+sage: 2 + 2
+4
+
+sage: factor(2005)
+5 * 401
+\end{verbatim}
+
+To exit, type \texttt{quit()} or press Ctrl+C twice.
+
+\section{Using Sage Notebook / Jupyter}
+
+SageMath can also be used in notebook interfaces:
+
+\begin{itemize}
+  \item \textbf{Sage Notebook:} An older web-based notebook interface that can be launched using \texttt{sage -n notebook}.
+  \item \textbf{Jupyter Notebooks:} Modern and widely used; start with \texttt{sage -n jupyter} to open a Jupyter notebook that supports SageMath kernels. This interface supports mixing executable code cells and rich text/LaTeX markup.
+\end{itemize}
+
+Jupyter notebooks are highly recommended for interactive exploration, documentation, and visualization.
+
+\section{CoCalc: SageMath in the Cloud}
+
+CoCalc (Collaborative Calculation) is an online service hosting SageMath, Jupyter notebooks, \LaTeX{} documents, and more. It requires no installation and supports real-time collaboration.
+
+Visit \url{https://cocalc.com} and create a free account to start a SageMath worksheet or Jupyter notebook immediately.
+
+\chapter{Working with Numbers: Integers, Rationals, Real, and Complex Numbers}
+
+SageMath provides robust support for various classes of numbers commonly used in mathematics, including integers, rational numbers, real numbers, and complex numbers. This chapter introduces how to work with each number type, perform arithmetic, and understand their properties in SageMath.
+
+\section{Integers: The \texttt{ZZ} Ring}
+
+Integers in SageMath belong to the ring \texttt{ZZ}. You can create and manipulate integers simply by typing numbers:
+
+\begin{verbatim}
+sage: a = 42           # Integer assignment
+sage: type(a)
+<class 'sage.rings.integer.Integer'>
+
+sage: b = a + 8        # Integer arithmetic
+sage: b
+50
+
+sage: a.factor()
+2 * 3 * 7
+\end{verbatim}
+
+Integers support arithmetic operations, factorization, divisibility tests, gcd, and lcm computations.
+
+\section{Rational Numbers: The \texttt{QQ} Field}
+
+Rational numbers are fractions of integers represented as elements of the field \texttt{QQ} in SageMath:
+
+\begin{verbatim}
+sage: r = QQ(3/4)
+sage: r
+3/4
+sage: s = QQ(5)
+sage: r + s
+23/4
+
+sage: r * (1/2)
+3/8
+
+sage: r.numerator()
+3
+
+sage: r.denominator()
+4
+\end{verbatim}
+
+Rationals are automatically reduced to lowest terms, and all arithmetic operations preserve rational output where possible.
+
+\section{Real Numbers: The \texttt{RR} Field}
+
+Real numbers in SageMath have arbitrary precision and belong to the real field \texttt{RR}:
+
+\begin{verbatim}
+sage: x = RR(3.14159)   # Approximate real number
+sage: y = RR('2.71828') # String input to maintain precision
+sage: x + y
+5.85987?
+sage: x.n(digits=10)    # Print with 10-digit precision
+3.141590000
+\end{verbatim}
+
+SageMath supports symbolic manipulation of real numbers as well as numerical approximations at adjustable precision.
+
+\section{Complex Numbers: The \texttt{CC} Field}
+
+Complex numbers consist of real and imaginary components and are elements of the complex field \texttt{CC} in SageMath:
+
+\begin{verbatim}
+sage: z = CC(1 + 2*I)
+sage: z
+1.00000000000000 + 2.00000000000000*I
+
+sage: z.real()
+1.0
+
+sage: z.imag()
+2.0
+
+sage: z.conjugate()
+1.0 - 2.0*I
+
+sage: abs(z)  # Magnitude
+2.23606797749979
+\end{verbatim}
+
+SageMath supports arithmetic, polar forms, and other complex analysis functions.
+
+\section{Converting Between Number Types}
+
+SageMath allows explicit conversion between types when meaningful:
+
+\begin{verbatim}
+sage: ZZ(5), QQ(5), RR(5), CC(5)
+(5, 5, 5.00000000000000, 5.00000000000000 + 0.00000000000000*I)
+
+sage: RR(QQ(2)/QQ(3))
+0.666666666666667?
+\end{verbatim}
+
+Conversion may raise errors if it is not mathematically valid, such as converting certain symbolic expressions to numbers.
+
+\section{Visualizing Numbers with Plots}
+
+To help understand the different types of numbers discussed, the following plots provide visual insight.
+
+\subsection{Rational Approximations of \(\pi\)}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{rational_approximations_pi.png}
+  \caption{Rational approximations of \(\pi\) as points on the number line.}
+  \label{fig:rationals_pi}
+\end{figure}
+
+\subsection{Plot of the Real-Valued Function \(f(x) = \sin(x)\)}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_sin.png}
+  \caption{Plot of the function \(f(x) = \sin(x)\) over \([-2\pi, 2\pi]\).}
+  \label{fig:plot_sin}
+\end{figure}
+
+\subsection{Complex Numbers on the Complex Plane}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{complex_plane_points.png}
+  \caption{Points \(z = 1 + 2i\) and its conjugate plotted on the complex plane.}
+  \label{fig:complex_plane_points.png}
+\end{figure}
+
+\chapter{Variables and Expressions: Defining Variables and Algebraic Operations}
+
+SageMath allows symbolic representation and manipulation of variables and algebraic expressions, making it a powerful tool for exploring mathematical concepts.
+
+\section{Defining Variables}
+
+To work symbolically in SageMath, you first define variables using the \texttt{var()} function.
+
+\begin{verbatim}
+sage: x = var('x')
+sage: y = var('y')
+sage: z = var('z')
+\end{verbatim}
+
+You can also define multiple variables at once:
+
+\begin{verbatim}
+sage: x, y, z = var('x y z')
+\end{verbatim}
+
+Once defined, these variables can be used to build algebraic expressions.
+
+\section{Constructing and Manipulating Expressions}
+
+You can create algebraic expressions by combining variables with arithmetic operations:
+
+\begin{verbatim}
+sage: expr1 = x^2 + 2*x + 1
+sage: expr2 = (x + 1)^2
+\end{verbatim}
+
+SageMath understands that \texttt{expr1} and \texttt{expr2} represent the same polynomial:
+
+\begin{verbatim}
+sage: expr1 == expr2
+True
+\end{verbatim}
+
+\section{Expression Simplification}
+
+SageMath provides various functions to simplify or manipulate expressions:
+
+\begin{itemize}
+  \item \texttt{expand()}: Expands products and powers.
+  \item \texttt{factor()}: Factors polynomials.
+  \item \texttt{simplify()}: Simplifies expression algebraically.
+\end{itemize}
+
+Example:
+
+\begin{verbatim}
+sage: expr = (x + 1)^3
+sage: expanded = expr.expand()
+sage: factored = expanded.factor()
+sage: simplified = (expr/(x + 1)).simplify()
+\end{verbatim}
+
+\section{Substitution in Expressions}
+
+You can substitute values or other expressions for variables using the \texttt{substitute()} method:
+
+\begin{verbatim}
+sage: expr = x^2 + y
+sage: expr.substitute(x=2)
+4 + y
+
+sage: expr.substitute(x=y + 1)
+(y + 1)^2 + y
+\end{verbatim}
+
+\section{Combining Expressions and Numeric Evaluation}
+
+Expressions can combine symbolic and numeric values. To evaluate numerically (e.g., at a decimal point), use \texttt{n()} or \texttt{numerical\_approx()}:
+
+\begin{verbatim}
+sage: expr = sin(x) + 1/3
+sage: expr.substitute(x=pi/4).n()
+1.040573
+\end{verbatim}
+
+\section{Visualizing Expressions with Plots}
+
+To help visualize how variables and expressions behave, the following plots demonstrate some important concepts.
+
+\subsection{Plot of the Expression \( (x + 1)^3 \)}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_cubic.png}
+  \caption{Plot of the cubic expression \( (x + 1)^3 \) over the interval \([-3, 1]\).}
+  \label{fig:plot_cubic}
+\end{figure}
+
+\subsection{Plot Showing Substitution Effects on \( \sin(x) + \frac{1}{3} \)}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_sin_plus_fraction.png}
+  \caption{Plot of \( \sin(x) + \frac{1}{3} \) over \([-2\pi, 2\pi]\), illustrating numeric shifts due to substitution.}
+  \label{fig:plot_sin_plus_fraction}
+\end{figure}
+
+\section{Exercises}
+\begin{itemize}
+  \item Define variables \(a, b, c\) and construct the expression \(a^2 + b^2 - c^2\).
+  \item Expand and factor the expression \((x + 2)^3\).
+  \item Substitute \(x = 3\) and \(y = 5\) into \(x^2 + y^2\).
+  \item Simplify the expression \(\frac{(x^2 - 1)}{(x - 1)}\) for \(x \neq 1\).
+\end{itemize}
+
+\chapter{Functions and Calculus: Differentiation, Integration, and Function Plotting}
+
+Calculus is a fundamental branch of mathematics concerned with change and accumulation. SageMath allows symbolic and numeric calculus calculations with ease and provides powerful visualization tools.
+
+\section{Defining Functions}
+
+Functions in SageMath can be defined symbolically using variables:
+
+\begin{verbatim}
+sage: x = var('x')
+sage: f = sin(x)^2 + cos(x)
+\end{verbatim}
+
+Or using the \texttt{function()} construct, useful for defining dependent functions:
+
+\begin{verbatim}
+sage: f = function('f', x)
+\end{verbatim}
+
+\section{Differentiation}
+
+SageMath supports differentiation via the \texttt{diff()} command. For example, differentiating \( \sin(x) \):
+
+\begin{verbatim}
+sage: diff(sin(x), x)
+cos(x)
+\end{verbatim}
+
+Higher-order derivatives:
+
+\begin{verbatim}
+sage: diff(sin(x^2), x, 4)
+16*x^4*sin(x^2) - 48*x^2*cos(x^2) - 12*sin(x^2)
+\end{verbatim}
+
+Partial derivatives for multivariable functions:
+
+\begin{verbatim}
+sage: x, y = var('x y')
+sage: f = x^2 + 17*y^2
+sage: f.diff(x)
+2*x
+sage: f.diff(y)
+34*y
+\end{verbatim}
+
+\section{Integration}
+
+Indefinite integrals are computed with \texttt{integral()} or \texttt{integrate()}:
+
+\begin{verbatim}
+sage: integral(cos(x), x)
+sin(x)
+\end{verbatim}
+
+Definite integrals with limits:
+
+\begin{verbatim}
+sage: integral(cos(x), x, 0, pi/2)
+1
+\end{verbatim}
+
+SageMath handles symbolic and numerical integration depending on the integrand.
+
+\section{Function Plotting}
+
+Plotting functions helps visualize their behavior and is done using \texttt{plot()}:
+
+\begin{verbatim}
+sage: plot(sin(x), (x, -2*pi, 2*pi))
+\end{verbatim}
+
+Add styles such as color, legend, and fill:
+
+\begin{verbatim}
+sage: plot(cos(x), (x, 0, pi/2), fill=True, color='red', legend_label='cos(x)')
+\end{verbatim}
+
+Multiple plots can be combined by adding plot objects.
+
+\section{Example: Derivative and Plot of \( f(x) = \sin(x)^2 \)}
+
+\begin{verbatim}
+sage: f = sin(x)^2
+sage: f_prime = diff(f, x)
+sage: p1 = plot(f, (x, 0, 2*pi), color='blue', legend_label='sin(x)^2')
+sage: p2 = plot(f_prime, (x, 0, 2*pi), color='green', legend_label="Derivative")
+sage: combined_plot = p1 + p2
+combined_plot.show()
+\end{verbatim}
+
+\section{Visualizing Calculus Concepts with Plots}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_sin_squared.png}
+  \caption{Plot of the function \( \sin(x)^2 \) over the interval \([0, 2\pi]\).}
+  \label{fig:plot_sin_squared}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_derivative_sin_squared.png}
+  \caption{Plot of the derivative of \( \sin(x)^2 \) over \([0, 2\pi]\).}
+  \label{fig:plot_derivative_sin_squared}
+\end{figure}
+
+\section{Exercises}
+
+\begin{itemize}
+  \item Compute and plot the first and second derivatives of \( e^{x^2} \).
+  \item Calculate the definite integral of \( \cos(x) \) from \(0\) to \(\pi\).
+  \item Define \( f(x, y) = x^2 y + y^3 \), compute \(\frac{\partial f}{\partial x}\) and \(\frac{\partial f}{\partial y}\).
+  \item Plot the function \( \sin(x) + \cos(y) \) over \( x \in [-\pi, \pi], y \in [-\pi, \pi] \).
+\end{itemize}
+
+\chapter{Linear Algebra: Matrices, Vectors, and Solving Systems}
+
+Linear algebra studies vectors, matrices, and the systems they form. SageMath provides comprehensive tools to create, manipulate, and solve problems involving these fundamental objects.
+
+\section{Matrices}
+
+Matrices in SageMath are created by passing a list of lists (rows):
+
+\begin{verbatim}
+sage: A = matrix([[1, 2, 3], 
+                  [3, 2, 1], 
+                  [1, 1, 1]])
+\end{verbatim}
+
+You can specify the ring (number system) over which the matrix is defined:
+
+\begin{verbatim}
+sage: B = matrix(QQ, [[1, 2], 
+                     [3, 4], 
+                     [5, 6]])
+\end{verbatim}
+
+\section{Vectors}
+
+Vectors are one-dimensional arrays:
+
+\begin{verbatim}
+sage: v = vector([1, 1, -4])
+\end{verbatim}
+
+Matrix and vector multiplication behaves as expected:
+
+\begin{verbatim}
+sage: A * v
+(-9, 1, -2)
+\end{verbatim}
+
+\section{Solving Linear Systems}
+
+To solve \(AX = Y\) for \(X\), use:
+
+\begin{verbatim}
+sage: Y = vector([0, -4, -1])
+sage: X = A.solve_right(Y)
+sage: X
+(-2, 1, 0)
+\end{verbatim}
+
+You can check the solution:
+
+\begin{verbatim}
+sage: A * X == Y
+True
+\end{verbatim}
+
+\section{Matrix Operations}
+
+SageMath supports common linear algebra operations such as:
+
+\begin{itemize}
+  \item Reduced row echelon form: \texttt{A.echelon_form()}
+  \item Kernel (null space): \texttt{A.kernel()}
+  \item Transpose: \texttt{A.transpose()}
+  \item Inverse (if invertible): \texttt{A.inverse()}
+  \item Determinant: \texttt{A.determinant()}
+\end{itemize}
+
+\section{Visualizing Matrices and Vectors}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{matrix_heatmap.png}
+  \caption{Heatmap visualization of matrix entries for matrix \(A\).}
+  \label{fig:matrix_heatmap}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{vector_plot.png}
+  \caption{Plot of vector \(v\) in 3D space.}
+  \label{fig:vector_plot}
+\end{figure}
+
+\section{Exercises}
+
+\begin{itemize}
+  \item Create a \(3 \times 3\) matrix \(A\) and compute its determinant and inverse (if it exists).
+  \item Define a vector \(v\) with three elements, then compute the product \(Av\).
+  \item Solve the system \(AX = Y\) for a given \(Y\).
+  \item Compute the kernel of \(A\) and interpret it.
+  \item Compute the reduced row echelon form of \(A\).
+\end{itemize}
+
+\chapter{Graphics in SageMath: 2D and 3D Plotting}
+
+Visualization is a powerful aid in understanding mathematical concepts. SageMath offers versatile plotting facilities, including two- and three-dimensional graphics, interactive plots, implicit plots for equations, visualization of Platonic solids, and contour plots.
+
+\section{2D Function Plotting}
+
+Basic 2D plotting uses the \texttt{plot()} function. For example:
+
+\begin{verbatim}
+sage: plot(sin(x), (x, -2\pi, 2\pi), color='blue')
+\end{verbatim}
+
+Multiple functions can be combined by adding plots:
+
+\begin{verbatim}
+sage: p1 = plot(sin(x), (x, -2\pi, 2\pi), color='blue')
+sage: p2 = plot(cos(x), (x, -2\pi, 2\pi), color='red')
+sage: show(p1 + p2)
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_2d_functions.png}
+  \caption{Combined plot of \( \sin(x) \) and \( \cos(x) \) in 2D.}
+  \label{fig:plot_2d_functions}
+\end{figure}
+
+\section{Interactive Plots}
+
+You can create interactive plots with sliders using the \texttt{@interact} decorator:
+
+\begin{verbatim}
+@interact
+def plot_function(f=input_box(x^2, label="Function f"), 
+                  a=slider(-5,0,1), b=slider(0,5,1)):
+    show(plot(f, (x, a, b)))
+\end{verbatim}
+
+\section{Implicit Plots}
+
+SageMath supports plotting implicit curves defined by equations:
+
+\begin{verbatim}
+implicit_plot(x^2 + y^2 == 1, (x, -1.5, 1.5), (y, -1.5, 1.5))
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_implicit_curve.png}
+  \caption{Implicit plot of the circle defined by \( x^2 + y^2 = 1 \).}
+  \label{fig:plot_implicit_curve}
+\end{figure}
+
+\section{3D Plotting}
+
+Plot surfaces with \texttt{plot3d}:
+
+\begin{verbatim}
+plot3d(sin(x*y), (x, -3, 3), (y, -3, 3))
+\end{verbatim}
+
+And parametric 3D curves:
+
+\begin{verbatim}
+parametric_plot3d((cos(t), sin(t), t), (t, 0, 4\pi))
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_3d_surface.png}
+  \caption{3D surface plot of \( \sin(x y) \).}
+  \label{fig:plot_3d_surface}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{plot_3d_parametric_curve.png}
+  \caption{3D parametric plot of a helix \( ( \cos(t), \sin(t), t ) \).}
+  \label{fig:plot_3d_parametric_curve}
+\end{figure}
+
+\section{Platonic Solids}
+
+Visualize Platonic solids easily:
+
+\begin{verbatim}
+tetrahedron().show()
+cube().show()
+dodecahedron().show()
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{plot_tetrahedron.png}
+  \caption{Visualization of the tetrahedron, a Platonic solid.}
+  \label{fig:plot_tetrahedron}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{plot_cube.png}
+  \caption{Visualization of the cube, a Platonic solid.}
+  \label{fig:plot_cube}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{plot_dodecahedron.png}
+  \caption{Visualization of the dodecahedron, a Platonic solid.}
+  \label{fig:plot_dodecahedron}
+\end{figure}
+
+\section{Contour Plots}
+
+Contour plots display level curves of functions of two variables:
+
+\begin{verbatim}
+contour_plot(sin(x)*cos(y), (x, -\pi, \pi), (y, -\pi, \pi))
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{plot_contour.png}
+  \caption{Contour plot of \( \sin(x) \cos(y) \).}
+  \label{fig:plot_contour}
+\end{figure}
+
+\chapter{Polynomials and Abstract Algebra}
+
+Polynomials are foundational objects in algebra, forming the basis for many algebraic structures. SageMath offers extensive support for defining, manipulating, and factoring polynomials as well as exploring rings and fields in abstract algebra.
+
+\section{Polynomial Rings and Definitions}
+
+Define a univariate polynomial ring over the rational numbers with an indeterminate \(x\):
+
+\begin{verbatim}
+sage: R.<x> = PolynomialRing(QQ)
+\end{verbatim}
+
+Construct a polynomial:
+
+\begin{verbatim}
+sage: f = x^3 - 2*x^2 + x - 1
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{poly_example.png}
+  \caption{Graph of the polynomial \( f(x) = x^3 - 2x^2 + x - 1 \).}
+  \label{fig:poly_example}
+\end{figure}
+
+Multivariate polynomial rings can be defined similarly:
+
+\begin{verbatim}
+sage: S.<x,y,z> = PolynomialRing(QQ, 3)
+sage: g = x*y + y^2 - z
+\end{verbatim}
+
+\section{Polynomial Arithmetic and Factorization}
+
+Perform arithmetic operations naturally:
+
+\begin{verbatim}
+sage: h = f * g
+sage: h.expand()
+\end{verbatim}
+
+Factor polynomials:
+
+\begin{verbatim}
+sage: f.factor()
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{poly_factorization.png}
+  \caption{Factorization of \( f(x) = x^3 - 2x^2 + x - 1 \) into irreducible factors.}
+  \label{fig:poly_factorization}
+\end{figure}
+
+\section{Roots of Polynomials}
+
+Find roots symbolically or numerically:
+
+\begin{verbatim}
+sage: f.roots(ring=CC)  # Complex roots numerically
+sage: f.roots(ring=QQbar)  # Algebraic roots symbolically
+\end{verbatim}
+
+Roots come with multiplicities and are returned as pairs.
+
+\section{3D Visualizations of Polynomials}
+
+Explore polynomial surfaces and parametric curves with 3D plotting:
+
+\begin{verbatim}
+var('x y')
+g = x^3 - 2*x^2 + x - 1 + y^2
+plot3d(g, (x, -2, 3), (y, -3, 3))
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{poly_3d_surface.png}
+  \caption{3D surface plot of the polynomial \( g(x,y) = x^3 - 2x^2 + x - 1 + y^2 \).}
+  \label{fig:poly_3d_surface}
+\end{figure}
+
+Parametric 3D polynomial curves:
+
+\begin{verbatim}
+t = var('t')
+parametric_plot3d((t, t^2, t^3), (t, -2, 2))
+\end{verbatim}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{poly_3d_parametric.png}
+  \caption{Parametric 3D plot of the twisted cubic curve \((t, t^2, t^3)\).}
+  \label{fig:poly_3d_parametric}
+\end{figure}
+
+\section{Abstract Algebra: Rings and Fields}
+
+Define rings and fields explicitly:
+
+\begin{verbatim}
+sage: Zmod17 = Integers(17)  # Finite field of size 17
+sage: F.<a> = GF(2^3, 'a')   # Finite field extension
+\end{verbatim}
+
+Explore elements and polynomial rings over these:
+
+\begin{verbatim}
+sage: R = PolynomialRing(Zmod17, 'x')
+\end{verbatim}
+
+\section{Exercises}
+
+\begin{itemize}
+  \item Define the polynomial \( f(x) = x^4 - 5x^3 + 7x - 3 \) and factor it.
+  \item Find the roots of \( x^3 - 2x + 1 \) in the complex field.
+  \item Create the polynomial ring \( \mathbb{Z}/5\mathbb{Z}[x,y] \) and define \( f = x^2 + y^2 + 1 \).
+  \item Multiply two polynomials in \( \mathbb{Q}[x] \) and expand the result.
+\end{itemize}
+
+\chapter{Solving Equations: Symbolic and Numerical Approaches}
+
+Solving equations is a fundamental task in mathematics and engineering. SageMath provides powerful tools to tackle both symbolic and numerical solutions of equations, systems of equations, and inequalities.
+
+\section{Symbolic Equation Solving}
+
+SageMath uses the \texttt{solve()} function for symbolic solutions. Declare variables first:
+
+\begin{verbatim}
+sage: var('x y p q')
+(x, y, p, q)
+\end{verbatim}
+
+Solve single or systems of equations:
+
+\begin{verbatim}
+sage: eq1 = p + q == 9
+sage: eq2 = q*y + p*x == -6
+sage: eq3 = q*y^2 + p*x^2 == 24
+sage: solve([eq1, eq2, eq3, p == 1], p, q, x, y)
+\end{verbatim}
+
+This returns exact symbolic solutions:
+
+\[
+\left[
+\begin{aligned}
+p &= 1, \quad q = 8, \\
+x &= -\frac{4}{3}\sqrt{10} - \frac{2}{3}, \\
+y &= \frac{1}{6}\sqrt{10} - \frac{2}{3}
+\end{aligned}
+\right],
+\quad
+\left[
+\begin{aligned}
+p &= 1, \quad q = 8, \\
+x &= \frac{4}{3}\sqrt{10} - \frac{2}{3}, \\
+y &= -\frac{1}{6}\sqrt{10} - \frac{2}{3}
+\end{aligned}
+\right]
+\]
+
+\section{Numerical Solutions}
+
+Use \texttt{n()} to get numerical approximations:
+
+\begin{verbatim}
+sage: solns = solve([eq1, eq2, eq3, p == 1], p, q, x, y, solution_dict=True)
+sage: [[s[p].n(30), s[q].n(30), s[x].n(30), s[y].n(30)] for s in solns]
+\end{verbatim}
+
+Output includes floating-point approximations to 30 bits precision.
+
+\section{Solving Inequalities}
+
+SageMath can solve inequalities and systems involving inequalities:
+
+\begin{verbatim}
+sage: var('x y')
+sage: solve([x - y >= 2, x + y <= 3], x, y)
+\end{verbatim}
+
+The solution describes the region satisfying constraints.
+
+\section{Differential Equations and Laplace Transform}
+
+Symbolic solutions extend to differential equations:
+
+\begin{verbatim}
+sage: t, s = var('t s')
+sage: x = function('x')(t)
+sage: y = function('y')(t)
+sage: f = 2*x.diff(t, 2) + 6*x - 2*y
+\end{verbatim}
+
+Taking Laplace transforms and solving algebraic equations:
+
+\begin{verbatim}
+sage: f.laplace(t,s)
+\end{verbatim}
+
+Then solve in the Laplace domain and apply inverse Laplace transform to get time-domain solutions.
+
+\section{General Tips}
+
+\begin{itemize}
+  \item Use \texttt{solution\_dict=True} in \texttt{solve()} for convenience.
+  \item Large nonlinear systems may be slow; try numerical solvers.
+  \item Use \texttt{find\_root()} for scalar numerical roots in intervals.
+  \item For polynomial roots, use \texttt{poly.roots()} with numeric fields.
+\end{itemize}
+
+\section{Exercises}
+
+\begin{itemize}
+  \item Solve the system \( x + y = 5 \) and \( 2x - y = 3 \).
+  \item Find numerical roots for \( x^3 - 2x + 1 = 0 \) in the interval \([-3, 3]\).
+  \item Solve the inequality system \( x - y \geq 2 \), \( x + y \leq 3 \).
+  \item Solve the differential equation \( y'' + y = 0 \) with initial conditions \( y(0) = 1 \), \( y'(0) = 0 \).
+\end{itemize}
+
+\chapter{Programming Essentials in SageMath}
+
+SageMath integrates Python programming with extensive mathematical capabilities. This chapter introduces the core programming concepts necessary for effective SageMath usage, including variables, functions, conditional statements, loops, and data structures.
+
+\section{Variables and Data Types}
+
+Variables store values of different types: integers, floating points, symbolic expressions, lists, and more.
+
+\begin{verbatim}
+sage: a = 5
+sage: b = 2.5
+sage: c = var('c')
+sage: expr = a + b*c
+\end{verbatim}
+
+Sage automatically recognizes types, allowing fluid use of symbolic and numeric calculations.
+
+\section{Defining Functions}
+
+Functions encapsulate computation. Define functions using Python syntax:
+
+\begin{verbatim}
+sage: def square(x):
+....:     return x^2
+\end{verbatim}
+
+Functions can be symbolic or numeric.
+
+\section{Conditional Statements}
+
+Control flow with \texttt{if-elif-else}:
+
+\begin{verbatim}
+sage: def sign(x):
+....:     if x > 0:
+....:         return 1
+....:     elif x < 0:
+....:         return -1
+....:     else:
+....:         return 0
+\end{verbatim}
+
+\section{Loops}
+
+Iterate with \texttt{for} and \texttt{while} loops:
+
+\begin{verbatim}
+sage: for i in range(5):
+....:     print(i)
+
+sage: i = 0
+sage: while i < 5:
+....:     print(i)
+....:     i += 1
+\end{verbatim}
+
+\section{Lists and Data Structures}
+
+Lists hold ordered collections:
+
+\begin{verbatim}
+sage: L = [1, 2, 3, 4]
+sage: L.append(5)
+\end{verbatim}
+
+Other structures include tuples, sets, and dictionaries.
+
+\section{Working with Matrices}
+
+Matrices are fundamental for linear algebra:
+
+\begin{verbatim}
+sage: M = Matrix([[1,2],[3,4]])
+sage: M.det()
+\end{verbatim}
+
+\section{File Handling and Scripts}
+
+You can save Sage code in \texttt{.sage} or \texttt{.py} files and run them in SageMath:
+
+\begin{verbatim}
+sage: load('my_script.sage')
+\end{verbatim}
+
+This allows modular and reusable programming.
+
+\section{Exercises}
+
+\begin{itemize}
+  \item Write a function that returns \(\text{factorial}(n)\).
+  \item Create a list of squares for numbers 1 to 10 using a \texttt{for} loop.
+  \item Define a matrix and compute its eigenvalues.
+  \item Write a function to check if a number is prime using conditional statements.
+\end{itemize}
+
+\chapter{Exporting Work: Integration with LaTeX for Publication-Quality Output}
+
+SageMath seamlessly integrates with LaTeX, allowing users to embed computations, results, and plots directly into LaTeX documents for professional publication-quality output.
+
+\section{Using SageTeX}
+
+The \texttt{SageTeX} package enables embedding Sage computations inside LaTeX. It computes values during document compilation, producing dynamic content.
+
+\begin{verbatim}
+\documentclass{article}
+\usepackage{sagetex}
+
+\begin{document}
+
+Number of partitions of 1269: $\sage{number_of_partitions(1269)}$.
+
+\begin{sageblock}
+f(x) = exp(x) * sin(2*x)
+\end{sageblock}
+
+Second derivative of $f$ is:
+
+\[
+\frac{d^2}{dx^2} \sage{f(x)} = \sage{diff(f,x,2)(x)}
+\]
+
+Here's a plot of $f$ from $-1$ to $1$:
+
+\sageplot{plot(f, -1, 1)}
+
+\end{document}
+\end{verbatim}
+
+\section{Preparing for SageTeX}
+
+Copy \texttt{sagetex.sty} into your document directory or ensure TeX can find it in its path. This file comes with Sage installation.
+
+Compile your document with:
+
+\begin{verbatim}
+pdflatex yourfile.tex
+sage yourfile.sagetex.sage
+pdflatex yourfile.tex
+\end{verbatim}
+
+This workflow runs Sage on the embedded code and incorporates outputs.
+
+\section{Generating LaTeX Code from Sage}
+
+Sage can produce LaTeX strings from mathematical expressions using the \texttt{latex()} function:
+
+\begin{verbatim}
+sage: var('z')
+sage: latex(z^12)
+'z^{12}'
+\end{verbatim}
+
+You can copy these outputs into your LaTeX source.
+
+\section{Including Graphics}
+
+Generate plots in Sage and export as PDFs, PNGs, or TikZ code for LaTeX inclusion:
+
+\begin{verbatim}
+sage: p = plot(sin(x), (x,0,pi))
+sage: p.save('sin_plot.pdf')
+\end{verbatim}
+
+Then include in LaTeX:
+
+\begin{verbatim}
+\includegraphics{sin_plot.pdf}
+\end{verbatim}
+
+or for TikZ plots:
+
+\begin{verbatim}
+sage: print(p.tikz_code())
+\end{verbatim}
+
+\section{Best Practices}
+
+- Use SageTeX for dynamic, computation-heavy documents.
+- For static documents, generate figures separately and include them.
+- Test compilation on small documents first.
+- Customize LaTeX preambles as needed for package dependencies.
+
+\section{Exercises}
+
+\begin{itemize}
+  \item Create a LaTeX document using SageTeX that computes a series sum.
+  \item Generate a plot in Sage and include it as a TikZ picture in LaTeX.
+  \item Convert Sage expressions to LaTeX and write a short mathematical report.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\end{document}
